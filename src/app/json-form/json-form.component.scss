@@ -1,0 +1,27 @@
+.form-body{
+    width: 30vw;
+}
+
+button{
+    float: right;
+    margin-top: 10px;
+}
+
+.form-area{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    word-wrap: break-word;
+}
+
+.container{
+    width: 500px;
+}
+
+input.ng-invalid.ng-touched{
+    border: 1px solid red;
+}
+.label{
+    font-weight: bold;
+}

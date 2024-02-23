@@ -1,0 +1,41 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div *ngFor="let control of jsonFormData?.controls;let i = index" class="form-group">
+            <div>
+                <label class="min-width label" *ngIf="control.label !== ''">{{ control.label }}</label>
+                <input [readonly]="viewMode" class="form-control input-field"
+                    *ngIf="control.type != 'textarea' && control.type != 'checkbox' && control.type != 'toggle' && control.type != 'range' && control.type != 'select' && control.type != 'radio'"
+                    [type]="control.type" [formControlName]="control.name" [value]="control.value" [min]="control.min"
+                    [max]="control.max" />
+                <textarea [readonly]="viewMode" class="form-control input-field" *ngIf="control.type === 'textarea'"
+                    [formControlName]="control.name" [value]="control.value"></textarea>
+                <input [readonly]="viewMode" class="form-check-input" *ngIf="control.type === 'checkbox'"
+                    [type]="control.type" [formControlName]="control.name" [checked]="control.value" />
+                <input [readonly]="viewMode" *ngIf="control.type === 'toggle' input-field" [type]="control.type"
+                    [formControlName]="control.name" [checked]="control.value" />
+                <input [readonly]="viewMode" class="form-range input-field" *ngIf="control.type === 'range'"
+                    [type]="control.type" [min]="control.option.min" [max]="control.option.max"
+                    [formControlName]="control.name" />
+                <!-- <select *ngIf="control.type === 'select'" [formControlName]="control.name"
+                    class="form-select input-field"
+                    (change)="control.dependent ? onOptionChange($event, i, control) : ''"
+                    aria-label="Default select example">
+                    <option *ngFor="let option of control.options" [value]="option.value">{{option.display_name}}
+                    </option>
+                </select> -->
+                <angular2-multiselect *ngIf="control.type === 'select'" [data]="control.options"
+                    [formControlName]="control.name" [settings]="dropdownSettings" (onSelect)="control.dependent ? onOptionChange($event, i, control) : ''"
+                    (onDeSelect)="control.dependent ? onOptionChange($event, i, control) : ''" (onSelectAll)="control.dependent ? onOptionChange($event, i, control) : ''"
+                    (onDeSelectAll)="control.dependent ? onOptionChange($event, i, control) : ''">
+                </angular2-multiselect>
+                <div *ngIf="control.type == 'radio'">
+                    <div *ngFor="let item of control.options" class="radio-options">
+                        <input [formControlName]="control.name" type="radio" [value]="item.value" (click)="checkView()"> {{ item.displayName }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button *ngIf="!viewMode" class="btn btn-warning" type="submit" [disabled]="!this.myForm.valid">Submit</button>
+        <!-- <button *ngIf="!viewMode && !editMode" class="btn btn-secondary" type="submit" (click)="resetForm()">Clear Form</button> -->
+    </div>
+</form>
