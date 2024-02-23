@@ -177,9 +177,6 @@ export class JsonFormComponent {
     localStorage.setItem('savedData', JSON.stringify(this.myForm.value))
   }
 
-  resetForm(){
-    this.myForm.reset();
-  }
   onItemSelect(e:any){
 
   }
